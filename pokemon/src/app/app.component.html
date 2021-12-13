@@ -1,0 +1,7 @@
+<button (click)='Tana()'>Pikachu</button>
+
+<google-map [center]='center' [zoom]='zoom'>
+
+    <map-marker *ngFor='let markerOption of markerList' [options]='markerOption'></map-marker>
+
+</google-map>

@@ -1,6 +1,10 @@
 <button (click)='Tana()'>Tane</button>
+<button (click)='Pokemon("pikachu")'>Pikachu</button>
+<button (click)="Pokemon('charmender')">charmander</button>
+<button (click)="Pokemon('bulbasaur')">bulbasaur</button>
+<button (click)="Pokemon('snorlax')">snorlax</button>
 
-<google-map [center]='center' [zoom]='zoom'>
+<google-map [center]='center' [zoom]='zoom' [width]='1000'>
 
     <map-marker *ngFor='let markerOption of markerList' [options]='markerOption'></map-marker>
 

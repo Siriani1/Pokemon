@@ -15,6 +15,8 @@ export class AppComponent {
   center: google.maps.LatLngLiteral = { lat: 35.5062897, lng: 138.6484981};
   zoom = 12;
   obsCiVett : Observable<Pokemon[]>;
+  obsPokemon : Observable<Pokemon>;
+  tipo: string;
 
   constructor(public http: HttpClient){}
 
@@ -28,20 +30,43 @@ export class AppComponent {
 
   PrepData = (data: Pokemon[]) => {
     console.log(data)
+    this.tipo = 'hole';
     this.markerList = [];
     for (const i of data['pokemon']) {
       let m: google.maps.MarkerOptions = {
         position: new google.maps.LatLng(i.lat, i.lng),
-        icon: this.findImage()
+        icon: this.findImage(this.tipo)
       }
       this.markerList.push(m)
     }
   }
 
-  findImage() {
-    return { url: './assets/img/hole.png', scaledSize: new google.maps.Size(32,32) };
+  findImage(tipo: string): google.maps.Icon {
+    return { url: `./assets/img/${tipo}.png`, scaledSize: new google.maps.Size(32,32) };
   }
 
   //fine primo punto
+
+
+  Pokemon(tipo: string){
+    this.obsPokemon = this.http.get<Pokemon>(`http://localhost:5000/${tipo}`);
+    this.obsPokemon.subscribe(this.PrePokemon);
+    this.tipo = tipo
+  }
+
+  PrePokemon = (data: Pokemon) => {
+    console.log('ciao')
+    this.markerList = [];
+    let m: google.maps.MarkerOptions = {
+
+      position: new google.maps.LatLng(data.lat, data.lng),
+      icon: this.findImage(this.tipo)
+      
+    }
+    this.markerList.push(m)
+    
+  }
+
+  
 
 }
